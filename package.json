@@ -1,0 +1,20 @@
+{
+	"license": "MIT",
+	"name": "example_node_js",
+	"version": "0.0.1",
+	"description": "",
+	"private": true,
+	"author": "Matthijs Kamstra aka [mck]",
+	"scripts": {
+		"prewatch": "haxe build_all.hxml",
+		"watch": "onchange 'src/*.hx' 'src/*/*.hx' 'src/*/*/*.hx' 'src/*/*/*/*.hx' -v -- haxe build_all.hxml & nodemon bin/example_node_js.js & livereload bin/"
+	},
+	"dependencies": {
+	    "noble-device": "^1.4.0",
+		"bbc-microbit": "0.1.0"
+	},
+	"devDependencies": {
+	    "nodemon": "^1.11.0",
+		"onchange": "3.0.2"
+	}
+}

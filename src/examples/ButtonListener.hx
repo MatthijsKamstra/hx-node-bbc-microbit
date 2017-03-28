@@ -8,8 +8,6 @@ import BBCMicrobit;
 
 class ButtonListener
 {
-
-
 	var BUTTON_VALUE_MAPPER = ['Not Pressed', 'Pressed', 'Long Press'];
 
 	public function new()

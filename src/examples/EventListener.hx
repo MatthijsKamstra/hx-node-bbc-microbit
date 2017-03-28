@@ -30,7 +30,7 @@ class EventListener {
 
 				// Example 1: subscribe to all micro:bit events with ID 9999 and any event value
 				console.log('subscribing to event family 9999, any event value');
-				microbit.subscribeEvents(EVENT_FAMILY, EVENT_VALUE_ANY, function() {
+				microbit.subscribeEvents(EVENT_FAMILY, EVENT_VALUE_ANY, function(error) {
 					console.log('\tsubscribed to micro:bit events of required type');
 				});
 

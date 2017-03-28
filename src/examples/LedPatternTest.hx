@@ -16,54 +16,11 @@ import js.node.Buffer;
 */
 class LedPatternTest {
 
-	/**
-	 *  https://github.com/zaccolley/microclicker/blob/master/draw.js
-	 */
-	function leadingZero(hex){
-		return ('00' + hex).substr(-2);
-	}
 
-	function binaryStringToHexString(binaryString:String):String {
-		return untyped parseInt(binaryString, 2).toString(16).toUpperCase();
-	}
-
-	function createLedMatrixBuffer(input:Array<Int>):Buffer {
-		var rowCount = 5;
-		var bufferString = '';
-
-		for ( i in 0 ... rowCount ) {
-			var matrixRow = input.slice(rowCount * i, rowCount * (i + 1)).join('');
-			var hex = binaryStringToHexString(matrixRow);
-			bufferString += leadingZero(hex);
-		}
-		return new Buffer(bufferString, 'hex');
-	}
-
-	function test(){
-		return createLedMatrixBuffer([
-			1, 1, 0, 1, 1,
-			0, 1, 1, 1, 0,
-			0, 0, 1, 0, 0,
-			0, 1, 1, 1, 0,
-			1, 1, 0, 1, 1,
-			1, 1, 0, 1, 1,
-
-		]);
-	}
-
-	function clear() {
-		return createLedMatrixBuffer([
-			0, 0, 0, 0, 0,
-			0, 0, 0, 0, 0,
-			0, 0, 0, 0, 0,
-			0, 0, 0, 0, 0,
-			0, 0, 0, 0, 0,
-		]);
-	}
 
 	public function new () {
 		//  var buffer = new Buffer('0F03050910', 'hex');
-		 var buffer = new Buffer(test());
+		var buffer = new Buffer(new Pattern().createLedMatrixBuffer(Pattern.HAXE));
 		console.log('Scanning for microbit');
 		BBCMicrobit.discover(function(microbit) {
 			console.log('\tdiscovered microbit: id = %s, address = %s', microbit.id, microbit.address);

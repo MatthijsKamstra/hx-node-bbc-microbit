@@ -46,6 +46,13 @@ class Pattern {
       0, 1, 1, 1, 0,
       0, 0, 1, 0, 0,
     ];
+	public static var HAXE = [
+      1, 0, 0, 0, 1,
+      0, 1, 1, 1, 0,
+      0, 1, 1, 1, 0,
+      0, 1, 1, 1, 0,
+      1, 0, 0, 0, 1,
+    ];
 
 	public function new (){
 

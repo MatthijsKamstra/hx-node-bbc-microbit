@@ -82,11 +82,13 @@ extern class MicrobitObj {
 	public function subscribeButtons(callback:Void->Void):Void;
 
 	public function EventNameEvents(id:Int, value:Int, callback:Void->Void):Dynamic;
+	@:overload(function (id:Int, value:Int, callback:Error->Void):Dynamic {})
 	public function subscribeEvents(id:Int, value:Int, callback:Void->Void):Dynamic;
 
 
 	// led-service
 	// https://github.com/sandeepmistry/node-bbc-microbit/blob/master/API.md#led-matrix
+	@:overload(function (callback:Error->Dynamic->Void):Void {})
 	public function readLedMatrixState(callback:Void->Void):Void;
 	public function writeLedMatrixState(data:Buffer, callback:Void->Void):Void;
 	// text is a string that must be 20 characters or less
@@ -112,7 +114,8 @@ extern class MicrobitObj {
 	public function readMagnetometerPeriod(callback:Error->Int):Void;
 	public function writeMagnetometerPeriod(period:EitherType<Int,Period>, callback:Void->Void):Void;
 	// x, y, and z values
-	public function subscribeMagnetometer(callback:Error->Int):Void;
+	@:overload(function (callback:Error->Int):Void {})
+	public function subscribeMagnetometer(callback:Void->Void):Void;
 	public function unsubscribeMagnetometer(callback:Error->Int):Void;
 
 	// bearing

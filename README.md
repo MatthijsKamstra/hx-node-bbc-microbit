@@ -4,7 +4,7 @@
 - [Haxe](#haxe)
 - [Installation](#installation-haxenpm)
 - [Haxelib](#haxelib)
-- [Visual Studio Code](##visual-studio-code)
+- [Visual Studio Code](#visual-studio-code)
 - [Haxe niceties](#haxe-niceties)
 - [Difference](#difference)
 - [Examples](#examples)

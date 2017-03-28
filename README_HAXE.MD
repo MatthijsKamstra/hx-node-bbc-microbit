@@ -2,7 +2,6 @@
 
 ![](icon.png)
 
-- [Project info](README.MD)
 - [Haxe](#haxe)
 - [Structure](#structure)
 - [Build](#build)
@@ -21,8 +20,7 @@ Haxe is an open source toolkit based on a modern, high level, strictly typed pro
 - Perhaps you want a [Haxe editor](http://matthijskamstra.github.io/haxejs/haxe/quick-install.html#step-2-install-editor)?
 - And install [MacDown](http://macdown.uranusjr.com/) to read and write Markdown (this document is written in it).
 
-Confused? Go see a doctor!
-Confused about Haxe? Please don't hesitate to ask [Matthijs Kamstra](mailto:matthijs@fonk.amsterdam)!
+
 
 <a href="structure"></a>
 ## Structure

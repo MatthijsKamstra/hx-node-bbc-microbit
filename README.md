@@ -2,12 +2,12 @@
 
 - [Micro:bit](#hx-node-bbc-microbit)
 - [Haxe](#haxe)
-- [Installation](#installation)
+- [Installation](#installation-haxenpm)
 - [Haxelib](#haxelib)
-- [Visual Studio Code](#visual_studio_code)
+- [Visual Studio Code](##visual-studio-code)
 - [Haxe niceties](#haxe-niceties)
-- [Examples](#examples)
 - [Difference](#difference)
+- [Examples](#examples)
 
 
 ![](icon.jpg)
@@ -15,8 +15,8 @@
 > The Micro Bit (also referred to as BBC Micro Bit, stylized as micro:bit) is an ARM-based embedded system designed by the BBC for use in computer education in the UK.
 >
 > The board is 4 cm × 5 cm and has an ARM Cortex-M0 processor, accelerometer and magnetometer sensors, Bluetooth and USB connectivity, a display consisting of 25 LEDs, two programmable buttons, and can be powered by either USB or an external battery pack.[2] The device inputs and outputs are through five ring connectors that are part of the 23-pin edge connector.
-> 
-> [wikipedia](https://en.wikipedia.org/wiki/Micro_Bit) 
+>
+> [wikipedia](https://en.wikipedia.org/wiki/Micro_Bit)
 
 
 Control a [BBC micro:bit](http://microbit.org/) from Node.js using BLE and [Haxe](http://haxe.org/)
@@ -136,7 +136,7 @@ microbit.writeAccelerometerPeriod(Period.NR_160, function(eror) {
 - EventListeners examples doesn't work: the code is not uploaded to NPM yet
 - Light sensor doesn't work: it works with a trick [read more](https://lancaster-university.github.io/microbit-docs/extras/light-sensing/)
 - The code is not written on the micro:bit, remove power (switch off) and the code is gone
-- 
+-
 
 
 ## Examples

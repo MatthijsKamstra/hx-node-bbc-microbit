@@ -26,6 +26,10 @@ import js.node.Buffer;
 	var PINDATACHANGE = 'pinDataChange';
 	var DISCONNECT = 'disconnect';
 }
+@:enum abstract FixValue(Int) {
+	var NR_0 = 0;
+	var NR_1 = 1;
+}
 
 /**
  *  https://github.com/sandeepmistry/node-bbc-microbit
@@ -92,7 +96,7 @@ extern class MicrobitObj {
 	public function readLedMatrixState(callback:Void->Void):Void;
 	public function writeLedMatrixState(data:Buffer, callback:Void->Void):Void;
 	// text is a string that must be 20 characters or less
-	public function writeLedText(text:String, callback:Void->Void):Void;
+	public function writeLedText(text:String, ?callback:Void->Void):Void;
 	public function readLedScrollingDelay(callback:Void->Void):Void;
 	public function writeLedScrollingDelay(delay:Int, callback:Void->Void):Void;
 
@@ -142,7 +146,11 @@ extern class MicrobitObj {
 	public function pinInput(pin:Int, callback:Void->Void):Void;
 	public function pinOutput(pin:Int, callback:Void->Void):Void;
 	//Read or write
+	// https://www.microbit.co.uk/functions/digital-read-pin
+	@:overload(function (pin:Int, callback:Error->FixValue->Void):Void {}) // pin must be configured as input
 	public function readPin(pin:Int, callback:Error->Int->Void):Void; // pin must be configured as input
+	//https://www.microbit.co.uk/functions/digital-write-pin
+	@:overload(function (pin:Int, value:FixValue, callback:Void->Void):Void{}) // pin must be configured as output
 	public function writePin(pin:Int, value:Int, callback:Void->Void):Void; // pin must be configured as output
 	// Subscription
 	public function subscribePinData(callback:Void->Void):Void;

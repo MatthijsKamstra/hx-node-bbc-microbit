@@ -14,7 +14,6 @@ class EventListener {
 		BBCMicrobit.discover(function(microbit) {
 			console.log('\tdiscovered microbit: id = %s, address = %s', microbit.id, microbit.address);
 
-
 			microbit.on('event', function(id, value) {
 				console.log('\ton -> micro:bit event received event: %d value: %d', id, value);
 			});

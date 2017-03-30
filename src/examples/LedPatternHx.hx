@@ -4,6 +4,8 @@ import js.Node.console;
 import js.Node.process;
 import js.node.Buffer;
 
+import haxe.Timer;
+
 import BBCMicrobit;
 
 class LedPatternHx {
@@ -47,7 +49,9 @@ class LedPatternHx {
 					// microbit.disconnect();
 				});
 
-				untyped setTimeout(setFullColor, 5000);
+				// untyped setTimeout(setFullColor, 5000);
+
+				Timer.delay(setFullColor, 5000);
 
 			});
 		});
@@ -58,7 +62,8 @@ class LedPatternHx {
       microbit.writeLedMatrixState(new Buffer('1f1f1f1f1f', 'hex'), function(){
 		microbit.readLedMatrixState(function(error, data) {
         	console.log('\t LED matrix state = %s', data.toString('hex'));
-			untyped setTimeout(setNoColor, 5000);
+			// untyped setTimeout(setNoColor, 5000);
+			Timer.delay(setNoColor, 5000);
 		});
 	  });
 	}

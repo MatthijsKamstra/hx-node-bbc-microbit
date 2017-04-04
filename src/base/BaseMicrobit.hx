@@ -16,10 +16,9 @@ class BaseMicrobit implements IMicrobit {
 
 	public var microbit:MicrobitObj;
 
-	public function new (?str:String,?delay:Int = 1000) {
+	public function new (?str:String,?delay:Int = 3000) {
 		this.str = str;
 		this.delay = delay;
-
 		onInit();
 	}
 
@@ -40,27 +39,25 @@ class BaseMicrobit implements IMicrobit {
 			microbit.connectAndSetUp(function() {
 				console.log('\tconnected to microbit');
 
+				// [mck] get model data
 				microbit.readModelNumber(function(error, value){
 					console.log('model number: ' + value);
 				});
-
 				microbit.readSerialNumber(function(error, value){
 					console.log('serial number: ' + value);
 				});
-
 				microbit.readFirmwareRevision(function(error, value){
 					console.log('firmware revision number: ' + value);
 				});
-
 				microbit.readDeviceName(function(error, value){
 					console.log('device name: ' + value);
 				});
 
 				console.log('sending pattern: "%s"', buffer.toString('hex'));
 				microbit.writeLedMatrixState(buffer, function() {
-					console.log('\tpattern sent');
+					console.log('\tpattern sent, now wait for ${this.delay}ms and start');
 
-					haxe.Timer.delay(onStart, delay);
+					haxe.Timer.delay(onStart, this.delay);
 					// onStart();
 				});
 

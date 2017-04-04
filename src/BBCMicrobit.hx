@@ -27,14 +27,44 @@ import js.node.Buffer;
 	var DISCONNECT = 'disconnect';
 }
 @:enum abstract FixValue(Int) {
-	var NR_0 = 0;
-	var NR_1 = 1;
+	var NR_0 = 0; // false
+	var NR_1 = 1; // true
+	var FALSE = 0;
+	var TRUE = 1;
+	var IS_ON = 0;
+	var IS_OFF = 1;
+}
+@:enum abstract PinValue(Int) from Int to Int {
+	var P0 = 0;
+	var P1 = 1;
+	var P2 = 2;
+	var P3 = 3;
+	var P4 = 4;
+	var P5_writeonly = 5;
+	var P6_writeonly = 6;
+	var P7_writeonly = 7;
+	var P8_writeonly = 8;
+	var P9_writeonly = 9;
+	var P10 = 10;
+	var P11_writeonly = 11;
+	var P12_writeonly = 12;
+	var P13_writeonly = 13;
+	var P14_writeonly = 14;
+	var P15_writeonly = 15;
+	var P16_writeonly = 16;
+	var P17_writeonly = 17;
+	var P18_writeonly = 18;
+	var P19_writeonly = 19;
+	var P20_writeonly = 20;
 }
 
 /**
- *  https://github.com/sandeepmistry/node-bbc-microbit
+ * The Micro Bit (also referred to as BBC Micro Bit, stylized as micro:bit)
+ * is an ARM-based embedded system designed by the BBC for use in computer education in the UK.
+ *
+ * @source http://microbit.org/index/
+ * @source https://github.com/sandeepmistry/node-bbc-microbit
  */
-
 @:jsRequire("bbc-microbit")
 extern class BBCMicrobit {
 
@@ -48,6 +78,60 @@ extern class BBCMicrobit {
 	static function discoverWithFilter(filter:String, callback:MicrobitObj->Void):Void;
 	static function stopScanning():Void;
 	static function startScanning():Void;
+
+	/**
+	 *  test this extern (but quite useless!!!)
+	 *
+	 *  @param str value you want to trace
+	 */
+	public static inline function trace (str:String):Void{
+		trace('$str');
+	}
+
+	/**
+	 *  Send an analog (0 to 1023) value to pin
+	 *
+	 *  @param m 			microbit
+	 *  @param pin 			pin 0 to 20
+	 *  @param value 		value from 0 to 255
+	 *  @param callback 	(optional) callback function
+	 */
+	public static inline function writeAnalogPin(m:MicrobitObj,pin:EitherType<Int,PinValue>, value:Int, ?callback:Void->Void):Void{
+		m.pinOutput(pin, function(){
+			trace('[writeAnalog] pinOutput - pin:$pin, value:$value');
+			m.pinAnalog(pin, function(){
+				trace('[writeAnalog] pinAnalog - pin:$pin, value:$value');
+				if(value < 0 ) value = 0;
+				if(value > 255) value = 255;
+				m.writePin(pin,value, function (){
+					trace('[writeAnalog] writePin - pin:$pin, value:$value');
+					if(callback!=null) callback();
+				});
+			});
+		});
+	}
+
+	/**
+	 *  Send a digital (0,1) value to pin
+	 *
+	 *  @param m 			microbit
+	 *  @param pin 			pin 0 to 20
+	 *  @param value 		fixedValue is either 0 or 1
+	 *  @param callback 	(optional) callback function
+	 */
+	public static inline function writeDigitalPin(m:MicrobitObj,pin:PinValue, value:FixValue, ?callback:Void->Void):Void{
+		m.pinOutput(pin, function(){
+			trace('[writeDigital] pinOutput');
+			m.pinDigital(pin, function(){
+				trace('[writeDigital] pinDigital');
+				m.writePin(pin,value, function (){
+					trace('[writeDigital] writePin');
+					if(callback!=null)callback();
+				});
+			});
+		});
+	}
+
 }
 
 // https://github.com/sandeepmistry/node-bbc-microbit/blob/master/API.md
@@ -139,21 +223,41 @@ extern class MicrobitObj {
 	// pin must be between 0 and 20.
 	// value must be between 0 and 255.
 
-	// AD mode
-	public function pinAnalog(pin:Int, callback:Void->Void):Void;
-	public function pinDigital(pin:Int, callback:Void->Void):Void;
-	// IO mode
-	public function pinInput(pin:Int, callback:Void->Void):Void;
-	public function pinOutput(pin:Int, callback:Void->Void):Void;
-	//Read or write
+	// AD mode (Analog/Digital mode)
+	public function pinAnalog(pin:EitherType<Int,PinValue>, ?callback:Void->Void):Void;
+	public function pinDigital(pin:EitherType<Int,PinValue>, ?callback:Void->Void):Void;
+	// IO mode (Input/Output mode)
+	public function pinInput(pin:EitherType<Int,PinValue>, ?callback:Void->Void):Void;
+	public function pinOutput(pin:EitherType<Int,PinValue>, ?callback:Void->Void):Void;
+	// Read or write
 	// https://www.microbit.co.uk/functions/digital-read-pin
-	@:overload(function (pin:Int, callback:Error->FixValue->Void):Void {}) // pin must be configured as input
-	public function readPin(pin:Int, callback:Error->Int->Void):Void; // pin must be configured as input
+	// @:overload(function (pin:PinValue, callback:Error->FixValue->Void):Void {}) // pin must be configured as input
+	public function readPin(pin:EitherType<Int,PinValue>, callback:Error->Int->Void):Void; // pin must be configured as input
 	//https://www.microbit.co.uk/functions/digital-write-pin
-	@:overload(function (pin:Int, value:FixValue, callback:Void->Void):Void{}) // pin must be configured as output
-	public function writePin(pin:Int, value:Int, callback:Void->Void):Void; // pin must be configured as output
+	// @:overload(function (pin:EitherType<Int,PinValue>, value:FixValue, callback:Void->Void):Void{}) // pin must be configured as output
+	public function writePin(pin:EitherType<Int,PinValue>, value:EitherType<Int,FixValue>, ?callback:Void->Void):Void; // pin must be configured as output
+
 	// Subscription
 	public function subscribePinData(callback:Void->Void):Void;
 	public function unsubscribePinData(callback:Void->Void):Void;
+
+	// https://github.com/sandeepmistry/node-bbc-microbit/blob/master/API.md#advanced
+/**
+ *
+ *  // data is a Buffer with format: <pin> <value>, ...
+microbit.readPinData(callback(error, data));
+
+microbit.writePinData(data, callback(error));
+
+// value is a buffer, n-bit of 0 means pin n is in digital mode, 1 means analog mode
+microbit.readPinAdConfiguration(callback(error, value));
+
+microbit.writePinAdConfiguration(value, callback(error));
+
+// value is a buffer, n-bit of 0 means pin n  is in output mode, 1 means input mode
+microbit.readPinIoConfiguration(callback(error, value));
+
+microbit.writePinIoConfiguration(value, callback(error));
+ */
 
 }
